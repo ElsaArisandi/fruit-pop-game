@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game Edukasi Buah - FRUIT POP!</title>
+
+  <!-- Stylesheet dan Font -->
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+
+  <!-- Audio Backsound -->
+  <audio id="backgroundMusic" src="assets/musik/backsound.mp3" loop></audio>
+  <!-- Audio Tambahan -->
+  <audio id="buttonClickSound" src="assets/musik/button_click.mp3"></audio> <!-- Pastikan file ini ada -->
+  <audio id="levelCompleteSound" src="assets/musik/level_complete.mp3"></audio> <!-- Tambahkan sound baru untuk akhir level/game -->
+
+</head>
+<body>
+
+  <!-- Tombol Suara (Diposisikan di luar container utama agar selalu terlihat) -->
+  <img id="sound-toggle" src="assets/gambar/sound_on.png" alt="Sound Toggle">
+
+  <!-- Dekorasi samping buah -->
+  <div class="fruit-deco left"></div>
+  <div class="fruit-deco right"></div>
+
+   <!-- Container Partikel (Awalnya hidden, akan muncul di sekitar jawaban benar) -->
+   <div id="particleContainer"></div>
+
+
+  <!-- ==================== Halaman Beranda ==================== -->
+  <div id="homeScreen" class="glass">
+    <h1><strong>FRUIT POP!</strong></h1>
+    <p>Belajar nama, warna, dan bentuk buah dengan cara menyenangkan!</p>
+
+    <!-- Tombol Mulai -->
+    <button id="startHomeButton">START</button>
+  </div>
+
+  <!-- ==================== Kontainer Permainan (Termasuk Mode Selector & Game Area) ==================== -->
+  <div id="gameContainer" class="glass hidden"> <!-- gameContainer awalnya hidden -->
+    <!-- H1 di sini akan diisi oleh JS atau disembunyikan tergantung kebutuhan -->
+    <h1 id="gameTitle" style="margin-bottom: 10px;">FRUIT POP!</h1> <!-- Beri ID agar mudah diakses JS -->
+
+    <!-- ========== Pilihan Mode Permainan ========== -->
+    <div class="modeSelector" id="modeSelector"> <!-- modeSelector awalnya visible di dalam gameContainer -->
+      <p>Pilih Mode Permainan:</p>
+      <!-- Memanggil setGameMode dan setModeStyle dari script.js -->
+      <!-- Tambahkan playButtonClickSound() di onclick -->
+      <button onclick="playButtonClickSound(); setGameMode('name'); setModeStyle('nameMode')">🍎 Tebak Nama</button>
+      <button onclick="playButtonClickSound(); setGameMode('color'); setModeStyle('colorMode')">🎨 Tebak Warna</button>
+      <button onclick="playButtonClickSound(); setGameMode('shape'); setModeStyle('dragMode')">🔳 Tebak Bentuk</button>
+    </div>
+
+    <!-- Area Permainan -->
+    <div id="gameArea" class="hidden"> <!-- gameArea awalnya hidden -->
+
+      <!-- Judul Soal (Sekarang akan berisi teks pertanyaan juga) -->
+      <h2 id="questionTitle" class="questionTitle"></h2> <!-- Teks pertanyaan akan diisi oleh JS -->
+
+      <!-- Tampilan Level Saat Ini -->
+      <p id="currentLevelDisplay" style="font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: var(--primary);"></p>
+
+      <!-- Progress Bar Level -->
+      <div id="progressBarContainer">
+           <div id="progressBar"></div>
+      </div>
+
+
+      <!-- Mode Tebak Nama / Warna -->
+      <div id="nameOrColorGame" class="gameModeArea hidden"> <!-- Awalnya hidden -->
+        <img id="fruitImage" src="" alt="Gambar Buah" class="animate-target" /> <!-- Tambah kelas target animasi -->
+        <div class="options">
+          <!-- Tombol pilihan akan diisi oleh JS -->
+        </div>
+        <p id="feedback"></p>
+      </div>
+
+      <!-- Mode Tebak Bentuk -->
+      <div id="shapeGame" class="gameModeArea hidden"> <!-- Awalnya hidden -->
+        <!-- ondrop dan ondragover sekarang ada di JS -->
+        <div id="siluetContainer">
+          <img id="shapeSiluet" class="shape animate-target" src="" alt="Siluet Buah"/> <!-- Tambah kelas target animasi -->
+        </div>
+        <div id="shapeChoices" class="shapeChoicesContainer">
+             <!-- Gambar pilihan akan diisi oleh JS -->
+        </div>
+        <p id="feedbackShape"></p>
+      </div>
+
+    </div> <!-- End of gameArea -->
+
+    <!-- ==================== Skor Akhir Level / Game ==================== -->
+    <div id="scoreSection" class="glass hidden"> <!-- scoreSection awalnya hidden -->
+      <p id="endLevelMessage"></p> <!-- Pesan Level Selesai / Permainan Selesai -->
+      <p id="levelResultText"></p> <!-- Teks Hasil Level (Contoh: "Hasil Level X") -->
+
+      <!-- Container untuk Bintang (Gambar Hadiah Dihapus) -->
+      <div id="scoreVisuals">
+         <h2 id="finalScoreTextStars"></h2> <!-- Teks Skor dalam Bintang -->
+         <!-- <img id="prizeImage" src="assets/gambar/prize_image.png" alt="Hadiah" class="hidden"/> --> <!-- BARIS INI DIHAPUS -->
+      </div>
+
+
+      <h2 id="endMessage"></h2> <!-- Pesan motivasi/selamat -->
+
+      <div id="endGameButtons">
+        <!-- Tombol Kembali ke Pilih Mode -->
+        <button id="backToModesBtn">Kembali</button>
+        <!-- Tombol Lanjut Level (akan di-hide di level akhir) -->
+        <button id="nextLevelBtn" class="hidden">Lanjut Level</button>
+        <!-- Tombol Keluar ke Beranda -->
+        <button id="exitBtn">Keluar</button>
+      </div>
+    </div>
+
+  </div> <!-- End of gameContainer -->
+
+  <!-- Script Utama Game -->
+  <script src="script.js"></script>
+
+</body>
+</html>

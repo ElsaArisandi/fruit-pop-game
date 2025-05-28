@@ -1,0 +1,723 @@
+/* ======= PALET WARNA CERIA ======= */
+:root {
+    --primary: #FF6F61; /* Merah/Salmon (Ini yang akan digunakan sebagai 'pink') */
+    --secondary: #FFD93D; /* Kuning */
+    --accent: #6FCF97; /* Hijau */
+    --bg-light: #FFF7EB; /* Krem Sangat Terang */
+    --text-dark: #333; /* Hitam Kebiruan */
+    --text-light: #fff; /* Putih */
+}
+
+/* ======= GAYA GLOBAL ======= */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Fredoka', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url("assets/beranda.jpg");
+    background-size: cover;
+    background-position: center;
+    background-color: var(--bg-light);
+    position: relative;
+    color: var(--text-dark);
+}
+
+/* ======= DEKORASI SAMPING BUAH ======= */
+.fruit-deco {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 40px;
+    z-index: 1;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.fruit-deco.left {
+    left: 20px;
+    background-image: url("assets/deco_buah_kiri.png");
+}
+
+.fruit-deco.right {
+    right: 20px;
+    background-image: url("assets/deco_buah_kanan.png");
+}
+
+/* ======= KONTENER UTAMA (BERANDA & GAME) ======= */
+#homeScreen,
+#gameContainer {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 40px 30px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+#gameContainer > *,
+#homeScreen > * {
+    margin-bottom: 15px;
+}
+#gameContainer > *:last-child,
+#homeScreen > *:last-child {
+    margin-bottom: 0;
+}
+
+/* ======= JUDUL UTAMA (GLOBAL) ======= */
+h1 {
+    color: var(--primary);
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+
+/* ======= GAYA SPESIFIK JUDUL BERANDA (#homeScreen h1) ======= */
+#homeScreen h1 {
+    font-size: 3.8rem;
+    color: var(--primary);
+    text-shadow:
+        -2px -2px 0 var(--secondary),
+        2px -2px 0 var(--secondary),
+        -2px 2px 0 var(--secondary),
+        2px 2px 0 var(--secondary),
+        4px 4px 0 var(--primary),
+        6px 6px 10px rgba(0, 0, 0, 0.5);
+    letter-spacing: 4px;
+    font-weight: bold;
+    animation-name: bobbleTitle;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    display: inline-block;
+}
+
+/* ======= TOMBOL UMUM ======= */
+button {
+    background-color: var(--secondary);
+    color: var(--text-dark);
+    border: none;
+    padding: 14px 24px;
+    margin: 10px 5px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #FFC107;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+/* ======= MODE SELECTOR ======= */
+.modeSelector {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modeSelector p {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.modeSelector button {
+    background-color: #FFB74D;
+    padding: 12px 20px;
+    margin: 8px 0;
+    width: 80%;
+    max-width: 300px;
+}
+
+.modeSelector button:hover {
+    background-color: #FFA726;
+}
+
+/* ======= AREA PERMAINAN (SETELAH MODE DIPILIH) ======= */
+#gameArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Gaya untuk tampilan level saat ini */
+#currentLevelDisplay {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+
+/* ======= PROGRESS BAR LEVEL ======= */
+#progressBarContainer {
+    width: 90%;
+    max-width: 300px;
+    height: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#progressBar {
+    width: 0%;
+    height: 100%;
+    background-color: var(--accent);
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+}
+
+
+/* ======= JUDUL PERTANYAAN (DI DALAM gameArea) ======= */
+#questionTitle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ======= MODE TEBAK NAMA/WARNA ======= */
+#nameOrColorGame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#fruitImage {
+    width: 150px;
+    height: 150px;
+    margin: 15px auto;
+    border-radius: 20px;
+    border: 5px solid var(--accent);
+    background-color: #fff;
+    object-fit: cover;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s;
+}
+
+#fruitImage:hover {
+    transform: scale(1.05) rotate(3deg);
+}
+
+
+.options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.options .option {
+    flex-grow: 1;
+    flex-basis: 120px;
+    max-width: 150px;
+    padding: 12px 15px;
+    font-size: 1.1rem;
+}
+
+
+/* ======= MODE TEBAK BENTUK (DRAG & DROP) ======= */
+#shapeGame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#siluetContainer {
+    width: 160px;
+    height: 160px;
+    margin: 20px auto;
+    border: 3px dashed var(--primary);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+#siluetContainer.drag-over {
+    border-color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+#shapeSiluet {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border: none;
+    background-color: transparent;
+    opacity: 0.9;
+}
+
+#shapeChoices {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+    width: 100%;
+}
+
+.shapeOption {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: grab;
+    border-radius: 12px;
+    background-color: #fff;
+    border: 3px solid #eee;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.shapeOption:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+.shapeOption:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    border-color: var(--secondary);
+}
+
+
+/* ======= FEEDBACK JAWABAN ======= */
+#feedback, #feedbackShape {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    min-height: 1.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+
+/* ======= KELAS HIDDEN ======= */
+.hidden {
+    display: none !important;
+}
+
+/* ======= ANIMASI TRANSISI ELEMEN ======= */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.animate-target {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.animate-in {
+    animation: fadeInScaleUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeInScaleUp {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.options .option.correct-border {
+    border: 4px solid green;
+    box-shadow: 0 0 18px green;
+}
+.options .option.wrong-border {
+    border: 4px solid red;
+    box-shadow: 0 0 18px red;
+}
+
+.shapeOption.correct-border {
+     border: 5px solid green;
+     box-shadow: 0 0 20px green;
+}
+.shapeOption.wrong-border {
+     border: 5px solid red;
+     box-shadow: 0 0 20px red;
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+
+/* ======= GAYA PARTIKEL ======= */
+#particleContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--secondary);
+    opacity: 0;
+    animation: particleAnimation 1.5s ease-out forwards;
+}
+
+@keyframes particleAnimation {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--particle-x), var(--particle-y)) scale(0.5);
+    }
+}
+
+
+/* ======= SECTION SKOR AKHIR ======= */
+#scoreSection {
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#scoreSection p {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+#levelResultText {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#scoreVisuals {
+    min-height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Sesuaikan gap karena hadiah dihapus */
+    margin-bottom: 20px;
+}
+
+#finalScoreTextStars {
+    font-size: 2.5rem;
+    color: gold;
+}
+
+/* Hapus gaya untuk #prizeImage dan @keyframes popIn */
+/* #prizeImage { ... } */
+/* @keyframes popIn { ... } */
+
+
+/* ======= PESAN MOTIVASI AKHIR ======= */
+#endMessage {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    min-height: 2.2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+
+/* ======= TOMBOL AKHIR ======= */
+#endGameButtons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+#endGameButtons button {
+    background-color: #FFD54F;
+    color: var(--text-dark);
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    flex-grow: 1;
+    flex-basis: 150px;
+    max-width: 200px;
+}
+
+#endGameButtons button:hover {
+    background-color: #FFC107;
+}
+
+
+/* ======= TOMBOL SUARA ======= */
+#sound-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s ease-in-out;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#sound-toggle:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+/* ======= RESPONSIF MOBILE ======= */
+@media (max-width: 600px) {
+    /* Container utama */
+    #homeScreen,
+    #gameContainer {
+        padding: 25px 15px;
+    }
+
+    /* Judul */
+    #homeScreen h1 {
+        font-size: 3rem;
+        letter-spacing: 3px;
+         text-shadow:
+            -1px -1px 0 var(--secondary),
+            1px -1px 0 var(--secondary),
+            -1px 1px 0 var(--secondary),
+            1px 1px 0 var(--secondary),
+            3px 3px 0 var(--primary),
+            5px 5px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+
+    /* Mode Selector */
+    .modeSelector p {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .modeSelector button {
+         width: 95%;
+         margin: 6px 0;
+         font-size: 1rem;
+    }
+
+    /* Area Permainan */
+    #questionTitle {
+        font-size: 1.2rem;
+        padding: 8px 15px;
+        margin-bottom: 15px;
+    }
+
+    #currentLevelDisplay {
+         font-size: 1.1rem;
+    }
+
+    #progressBarContainer {
+        max-width: 250px;
+        margin-bottom: 15px;
+    }
+
+
+    /* Mode Tebak Nama / Warna */
+    #fruitImage {
+        width: 120px;
+        height: 120px;
+        margin: 10px auto;
+    }
+
+    .options {
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+     .options .option {
+         flex-basis: 45%;
+         max-width: 150px;
+         font-size: 1rem;
+         padding: 10px 12px;
+     }
+
+    /* Mode Tebak Bentuk */
+    #siluetContainer {
+        width: 130px;
+        height: 130px;
+        margin: 15px auto;
+    }
+
+    #shapeChoices {
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .shapeOption {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Feedback */
+    #feedback, #feedbackShape {
+        font-size: 1.2rem;
+        min-height: 1.5rem;
+        margin-top: 10px;
+    }
+
+    /* Skor Akhir */
+    #scoreSection p {
+        font-size: 1.1rem;
+    }
+
+    #levelResultText {
+        font-size: 1.1rem;
+    }
+
+    #scoreVisuals { /* Sesuaikan gap di mobile karena hadiah dihapus */
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    #finalScoreTextStars {
+         font-size: 2rem;
+    }
+
+    /* Hapus gaya hadiah di mobile */
+    /* #prizeImage { ... } */
+
+    #endMessage {
+        font-size: 1.8rem;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    #endGameButtons {
+         gap: 15px;
+    }
+
+    #endGameButtons button {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+        flex-basis: 120px;
+    }
+
+    /* Dekorasi samping */
+    .fruit-deco {
+        width: 50px;
+        height: 50px;
+        top: 20px;
+        left: 10px;
+    }
+    .fruit-deco.right {
+        right: 10px;
+    }
+
+    /* Tombol suara */
+    #sound-toggle {
+        width: 30px;
+        height: 30px;
+        top: 10px;
+        left: 10px;
+    }
+}
+
+/* ==================== ANIMASI KEYFRAMES ==================== */
+@keyframes bobbleTitle {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-3px, -5px) rotate(-0.5deg); }
+    50% { transform: translate(0, -10px) rotate(0deg); }
+    75% { transform: translate(3px, -5px) rotate(0.5deg); }
+}
+
+@keyframes fadeInScaleUp {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* @keyframes popIn Dihapus */
+
+@keyframes particleAnimation {
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--particle-x), var(--particle-y)) scale(0.5); }
+}
